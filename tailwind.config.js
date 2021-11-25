@@ -5,7 +5,12 @@ module.exports = {
     container: {
       padding: '3rem',
     },
-    extend: {},
+
+    extend: {
+      fontFamily: {
+        hero: ['"Times New Roman"', 'ui-serif'],
+      },
+    },
   },
   variants: {
     extend: {},
