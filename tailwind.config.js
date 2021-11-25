@@ -9,6 +9,7 @@ module.exports = {
       ...theme('colors'),
       primary: '#161616',
       secondary: '#252525',
+      input: 'hsla(0, 0%, 82%, 0.25)',
       danger: '#AF2E1C',
     }),
 
