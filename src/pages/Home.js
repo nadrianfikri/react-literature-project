@@ -5,7 +5,7 @@ export default function Home() {
   return (
     <div>
       <Header />
-      <Hero />
+      <Hero onSignUp={'registmodal'} onSignIn={'loginmodal'} />
     </div>
   );
 }
