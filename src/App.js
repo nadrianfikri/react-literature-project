@@ -1,11 +1,12 @@
-import { Landing, Home, SearchPage } from './pages';
+import { Landing, Home, SearchPage, Profile } from './pages';
 
 function App() {
   return (
     <div>
       {/* <Landing /> */}
       {/* <Home /> */}
-      <SearchPage />
+      {/* <SearchPage /> */}
+      <Profile />
     </div>
   );
 }

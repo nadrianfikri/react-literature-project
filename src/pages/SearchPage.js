@@ -11,8 +11,8 @@ export default function SearchPage() {
   return (
     <div>
       <Header />
-      <main className="pt-24 bg-primary flex justify-center">
-        <div className="container flex flex-col gap-4 px-6 md:px-0 pb-96">
+      <main className="pt-24 bg-primary flex justify-center min-h-screen">
+        <div className="container flex flex-col gap-4 px-6  md:px-0">
           <form action="/literature" className="space-y-8">
             <section className="flex items-center justify-center gap-2 w-full md:w-1/2">
               <Search name="search" value="title" onChange={'onchange'} />
