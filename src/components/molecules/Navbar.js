@@ -1,7 +1,6 @@
 import { Fragment } from 'react';
 import { Popover, Transition } from '@headlessui/react';
 import { MenuIcon, XIcon } from '@heroicons/react/outline';
-import { Link } from 'react-router-dom';
 
 import { NavItem, NavLogo } from '../atoms/NavItems';
 import Button from '../atoms/Button';

@@ -1,5 +1,4 @@
-import { Fragment } from 'react';
-import { Popover, Transition } from '@headlessui/react';
+import { Popover } from '@headlessui/react';
 import Navbar from '../molecules/Navbar';
 
 export default function Header(props) {
