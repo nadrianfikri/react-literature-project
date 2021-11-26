@@ -20,6 +20,9 @@ module.exports = {
       fontSize: {
         '6xl': '96px',
       },
+      color: {
+        danger: '#AF2E1C',
+      },
       width: {
         350: '350px',
         50: '50px',

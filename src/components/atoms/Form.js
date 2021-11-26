@@ -18,7 +18,7 @@ function DirectLink(props) {
   return (
     <p className="text-center text-gray-400 mt-4 text-sm">
       {props.text}
-      <button type="button" onClick={props.onClick} className="font-bold">
+      <button type="button" onClick={props.onClick} className="font-bold text-red-700">
         {props.textLink}
       </button>
     </p>
