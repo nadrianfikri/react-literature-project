@@ -10,7 +10,7 @@ function NavLogo(props) {
 function NavItem(props) {
   return (
     <Link to={props.to}>
-      <p className={`text-white ${props.className}`}>{props.text}</p>
+      <p className={`text-gray-200 text-lg hover:text-white ${props.className}`}>{props.text}</p>
     </Link>
   );
 }
