@@ -62,4 +62,4 @@ function DirectLink(props) {
   );
 }
 
-export { Input, DirectLink, Select, Option };
+export { Input, DirectLink, Select, Option, InputImage };
