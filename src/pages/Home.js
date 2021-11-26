@@ -4,7 +4,6 @@ import Header from '../components/organism/Header';
 import Search from '../components/organism/Search';
 
 export default function Home() {
-  console.log(useParams());
   return (
     <div>
       <Header />
