@@ -8,6 +8,8 @@ function Input(props) {
         placeholder={props.placeholder}
         name={props.name}
         value={props.value}
+        onFocus={props.onFocus}
+        ref={props.ref}
         required
       />
     </>
@@ -37,16 +39,14 @@ function Option(props) {
   );
 }
 
-function InputImage(props) {
+function InputFile(props) {
   return (
-    <div className="form-group space-y-2 pb-20">
-      <label htmlFor={props.labelFor} className="font-bold text-lg">
-        {props.labelName}
+    <div>
+      <label htmlFor={props.name} className={`p-2 w-max flex items-center gap-4 bg-input text-gray-300 rounded-md focus:outline-none border-2 border-gray-500 placeholder-gray-300 cursor-pointer ${props.className}`}>
+        {props.text}
+        <img className="w-5 h-7" src="/assets/icons/attach.svg" alt="icon" />
       </label>
-      <label htmlFor={props.labelFor} className="w-max text-yellow-500 bg-gray-200 rounded-md text-lg flex gap-10 cursor-pointer p-2 border-2 border-gray-300">
-        Attach Here <img src="/assets/icons/attach.svg" alt="icon" />
-      </label>
-      <input onChange={props.onChange} type="file" hidden id="images" name="images" multiple />
+      <input onChange={props.onChange} type="file" hidden id={props.name} name={props.name} />
     </div>
   );
 }
@@ -62,4 +62,4 @@ function DirectLink(props) {
   );
 }
 
-export { Input, DirectLink, Select, Option, InputImage };
+export { Input, DirectLink, Select, Option, InputFile };
