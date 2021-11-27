@@ -31,8 +31,8 @@ export default function Profile() {
           <section className="space-y-6">
             <header className="text-3xl text-white font-bold">My Literature</header>
             <div className="flex flex-wrap gap-5 md:gap-20">
-              <Literature to="/" thumbnail="/assets/images/pdf.png" title="Judul" author="Nadrian" year="2019" />
-              <Literature to="/" thumbnail="/assets/images/pdf.png" title="Judul" author="Nadrian" year="2019" />
+              <Literature to="/detail/1" thumbnail="/assets/images/pdf.png" title="Judul" author="Nadrian" year="2019" />
+              <Literature to="/detail/3" thumbnail="/assets/images/pdf.png" title="Judul" author="Nadrian" year="2019" />
             </div>
           </section>
         </div>

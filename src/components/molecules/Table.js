@@ -65,7 +65,7 @@ function TBody({ children }) {
 
 function THeader(props) {
   return (
-    <thead className="border-b border-grey-600 text-xs md:text-sm">
+    <thead className="border-b border-grey-600 text-xs md:text-base">
       <tr>
         <th className="py-2 px-2">{props.col1}</th>
         <th>{props.col2}</th>
