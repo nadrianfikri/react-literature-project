@@ -1,4 +1,4 @@
-import { Landing, Home, SearchPage, Profile, Collection, AddLiterature } from './pages';
+import { Landing, Home, SearchPage, Profile, Collection, AddLiterature, Detail } from './pages';
 
 function App() {
   return (
@@ -8,7 +8,8 @@ function App() {
       {/* <SearchPage /> */}
       {/* <Profile /> */}
       {/* <Collection /> */}
-      <AddLiterature />
+      {/* <AddLiterature /> */}
+      <Detail />
     </div>
   );
 }
