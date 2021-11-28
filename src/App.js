@@ -1,4 +1,4 @@
-import { Landing, Home, SearchPage, Profile, Collection, AddLiterature, Detail, Admin } from './pages';
+import { Landing, Home, SearchPage, Profile, Collection, AddLiterature, Detail, Admin, Notfound } from './pages';
 import { Switch, Route } from 'react-router-dom';
 
 function App() {
@@ -12,6 +12,7 @@ function App() {
       <Route path="/add-literature" component={AddLiterature} />
       <Route path="/detail/:id" component={Detail} />
       <Route path="/admin" component={Admin} />
+      <Route path="*" component={Notfound} />
     </Switch>
   );
 }
