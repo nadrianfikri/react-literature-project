@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { useParams, useHistory } from 'react-router';
+import { useHistory } from 'react-router';
 import { Option, Select } from '../components/atoms/Form';
 import Literature from '../components/molecules/Literature';
 import Header from '../components/organism/Header';
