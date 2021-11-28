@@ -1,6 +1,6 @@
 import { Landing, Home, SearchPage, Profile, Collection, AddLiterature, Detail, Admin, Notfound } from './pages';
-import { Switch, Route, useHistory } from 'react-router-dom';
-import { useContext, useEffect, useState } from 'react';
+import { Switch, Route } from 'react-router-dom';
+import { useContext, useEffect } from 'react';
 import { AuthContext } from './context/authContext';
 import { API, setAuthToken } from './config/api';
 
@@ -9,7 +9,7 @@ if (localStorage.token) {
   setAuthToken(localStorage.token);
 }
 function App() {
-  const history = useHistory();
+  // const history = useHistory();
   const [state, dispatch] = useContext(AuthContext);
 
   // create function for check user token
