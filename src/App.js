@@ -1,10 +1,19 @@
+import { Landing, Home, SearchPage, Profile, Collection, AddLiterature, Detail, Admin, Notfound } from './pages';
+import { Switch, Route } from 'react-router-dom';
+
 function App() {
   return (
-    <div className="App">
-      <header className="bg-red-200">
-        <p className="font-hero italic">of</p>
-      </header>
-    </div>
+    <Switch>
+      <Route exact path="/" component={Landing} />
+      <Route path="/home" component={Home} />
+      <Route path="/literature" component={SearchPage} />
+      <Route path="/profile" component={Profile} />
+      <Route path="/collection" component={Collection} />
+      <Route path="/add-literature" component={AddLiterature} />
+      <Route path="/detail/:id" component={Detail} />
+      <Route path="/admin" component={Admin} />
+      <Route path="*" component={Notfound} />
+    </Switch>
   );
 }
 
