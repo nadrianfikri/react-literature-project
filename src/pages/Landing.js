@@ -1,15 +1,23 @@
-import { useState } from 'react';
+import { useState, useContext } from 'react';
+import { API, setAuthToken } from '../config/api';
+import { AuthContext } from '../context/authContext';
+import { useHistory } from 'react-router';
 
 import Header from '../components/organism/Header';
 import Hero from '../components/organism/Hero';
 import Login from './auth/Login';
 import Register from './auth/Register';
+import Alert from '../components/atoms/Alert';
 import { Input, Option, Select } from '../components/atoms/Form';
+import { LoginMsg } from '../components/atoms/Message';
 
 export default function Home() {
+  const history = useHistory();
+
+  const [, dispatch] = useContext(AuthContext);
   const [openLgn, setOpenLgn] = useState(false);
   const [openRgs, setOpenRgs] = useState(false);
-
+  const [message, setMessage] = useState(null);
   // store data with useState
   const [form, setForm] = useState({
     email: '',
@@ -20,7 +28,7 @@ export default function Home() {
     address: '',
   });
 
-  const { email, password, fullname, gender, phone, address } = form;
+  const { email, password, fullname, phone, address } = form;
 
   const handleChange = (e) => {
     setForm({
@@ -28,11 +36,108 @@ export default function Home() {
       [e.target.name]: e.target.value,
     });
   };
-  const handleLogin = () => {
-    console.log('login');
+
+  // create function handle login, check data user
+  const handleLogin = async (e) => {
+    try {
+      e.preventDefault();
+      // create config content-type
+      const config = {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      };
+
+      // convert form data to string
+      const body = JSON.stringify({
+        email,
+        password,
+      });
+
+      // insert data user for login process
+      const res = await API.post('/login', body, config);
+      setAuthToken(res.data.data.token);
+
+      //checking process
+      setTimeout(() => {
+        if (res?.status === 200) {
+          // send data to context
+          dispatch({
+            type: 'LOGIN_SUCCESS',
+            payload: res.data.data,
+          });
+
+          setMessage(null);
+          history.push('/');
+        }
+      }, 2000);
+
+      // role user check
+      setTimeout(() => {
+        if (res.data.data.role === 'admin') {
+          history.push('/admin');
+        }
+      }, 2000);
+
+      setMessage(LoginMsg);
+      setForm({
+        email: '',
+        password: '',
+      });
+    } catch (error) {
+      console.log(error);
+      const alert = (
+        <Alert
+          variant="red"
+          message="Email or Password is wrong"
+          onClick={() => {
+            setMessage(null);
+          }}
+        />
+      );
+      setMessage(alert);
+      setTimeout(() => {
+        setMessage(null);
+      }, 1500);
+    }
   };
-  const handleRegister = () => {
-    console.log('register');
+
+  // create function to handle register post data user
+  const handleRegister = async (e) => {
+    try {
+      e.preventDefault();
+      // create config content-type
+      const config = {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      };
+
+      // convert formdata to string
+      const body = JSON.stringify(form);
+
+      // send data to database
+      const res = await API.post('/register', body, config);
+      setAuthToken(res.data.data.token);
+
+      //checking process
+      setTimeout(() => {
+        if (res?.status === 200) {
+          // send data to context
+          dispatch({
+            type: 'LOGIN_SUCCESS',
+            payload: res.data.data,
+          });
+
+          setMessage(null);
+          history.push('/');
+        }
+      }, 2000);
+
+      setMessage(LoginMsg);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const openAnotherModal = () => {
@@ -41,7 +146,8 @@ export default function Home() {
   };
 
   return (
-    <div>
+    <div className="relative">
+      {message && message}
       <Header />
       <Hero onSignUp={() => setOpenRgs(true)} onSignIn={() => setOpenLgn(true)} />
 

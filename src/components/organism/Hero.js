@@ -9,7 +9,9 @@ export default function Hero(props) {
           source <span className="italic">of </span>
           intelligence
         </p>
-        <p className="text-md lg:text-2xl ">Sign-up and receive unlimited accesss to all of your literatur - share your literature.</p>
+        <p className="text-md lg:text-2xl ">
+          Sign-up and receive <strong>unlimited</strong> access to all of your stron literature and share your literature.
+        </p>
         <div className="flex justify-between gap-4">
           <Button text="Sign Up" className="bg-danger w-full" onClick={props.onSignUp} />
           <Button text="Sign In" className="bg-white w-full text-black" onClick={props.onSignIn} />

@@ -22,7 +22,7 @@ export default function Profile() {
               </div>
               {/* avatar */}
               <div className="flex flex-col gap-2 justify-center items-center">
-                <img src="/assets/images/avatar 1.png" alt="img" className="rounded-md h-52 w-56 object-contain border border-gray-600 " />
+                <img src="/assets/images/avatar.jpg" alt="img" className="rounded-md h-52 w-56 object-contain border border-gray-600 " />
                 <Button type="button" text="Edit Profile" className="bg-danger text-white w-56 font-bold" />
               </div>
             </div>

@@ -21,7 +21,7 @@ export default function Detail() {
             <InfoLiterature data="April 2020" desc="Publication Date" />
             <InfoLiterature data="April 2020" desc="Publication Date" />
             <InfoLiterature textColor="text-red-700" data="12345787654" desc="ISBN" />
-            <Download link="https://s3.amazonaws.com/dq-blog-files/pandas-cheat-sheet.pdf" />
+            <Download link="/assets/Pengantar Arsitektur.pdf" />
           </section>
           <section className="w-max">
             <button className=" flex justify-center items-center gap-4 bg-danger rounded p-2 text-white">
