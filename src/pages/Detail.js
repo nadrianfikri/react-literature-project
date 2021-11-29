@@ -14,6 +14,7 @@ import PdfPreview from '../components/atoms/PdfPreview';
 export default function Detail() {
   const { id } = useParams();
   const [book, setBook] = useState(null);
+  const [bookmark, setBookmark] = useState(null);
 
   // create data book from api
   const getDataBook = async () => {
@@ -28,8 +29,51 @@ export default function Detail() {
     }
   };
 
+  // get data collection to confirm bookmarked collection
+  const getCollection = async () => {
+    try {
+      const res = await API.get(`/collection/${id}`);
+      setBookmark(res.data.data);
+    } catch (error) {
+      console.log(error);
+      setBookmark(null);
+    }
+  };
+
+  // create function post data to collection
+  const addCollection = async () => {
+    try {
+      const config = {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      };
+
+      await API.post(`collection/${id}`, config);
+
+      getCollection();
+    } catch (error) {
+      console.log(error);
+      setBookmark(null);
+    }
+  };
+
+  // create function delete data to collection
+  const removeCollection = async () => {
+    try {
+      await API.delete(`collection/${bookmark?.id}`);
+
+      getCollection();
+    } catch (error) {
+      console.log(error);
+      setBookmark(null);
+    }
+  };
+
   useEffect(() => {
     getDataBook();
+    getCollection();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   return (
     <div>
@@ -47,9 +91,15 @@ export default function Detail() {
             <Download link={book?.attach} />
           </section>
           <section className="w-max">
-            <button className=" flex justify-center items-center gap-4 bg-danger rounded p-2 text-white">
-              Add My Collection <BookmarkIcon className="h-5 text-white" />
-            </button>
+            {bookmark === null ? (
+              <button onClick={addCollection} className=" flex justify-center items-center gap-4 bg-danger rounded p-2 text-white">
+                Add My Collection <BookmarkIcon className="h-5 text-white" />
+              </button>
+            ) : (
+              <button onClick={removeCollection} className=" flex justify-center items-center gap-4 bg-danger rounded p-2 text-white">
+                Remove Collection <Bookmarked className="h-5 text-white" />
+              </button>
+            )}
           </section>
         </div>
       </main>

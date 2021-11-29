@@ -1,5 +1,3 @@
-import { Input } from '../atoms/Form';
-
 export default function Search(props) {
   return (
     <>
