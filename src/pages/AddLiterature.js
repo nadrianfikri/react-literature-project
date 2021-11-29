@@ -4,9 +4,11 @@ import Alert from '../components/atoms/Alert';
 import { Input, InputFile } from '../components/atoms/Form';
 import Header from '../components/organism/Header';
 import { API } from '../config/api';
+import { useHistory } from 'react-router';
 
 export default function AddLiterature() {
   const ref = useRef();
+  const history = useHistory();
   const [message, setMessage] = useState(null);
   const [preview, setPreview] = useState({
     thumbnail: '',
@@ -46,7 +48,6 @@ export default function AddLiterature() {
       });
     }
   };
-  console.log(form);
 
   const handleSubmit = async (e) => {
     try {
@@ -81,13 +82,18 @@ export default function AddLiterature() {
         />
       );
       setMessage(alert);
+
+      setTimeout(() => {
+        history.push('/literature');
+      }, 1700);
     } catch (error) {
       console.log(error);
     }
   };
   return (
-    <div>
+    <div className="relative">
       <Header />
+      {message && message}
       <main className="pt-24 bg-primary flex justify-center min-h-screen ">
         <div className="container flex flex-col gap-10 px-6 md:px-0 ">
           <section className="space-y-6">
