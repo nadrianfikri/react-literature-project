@@ -8,6 +8,7 @@ import DataUser from '../components/organism/DataUser';
 import Header from '../components/organism/Header';
 import Literature from '../components/molecules/Literature';
 import { Modal, ModalTitle, Animate } from '../components/molecules/Modal';
+import NoData from '../components/atoms/NoData';
 
 export default function Profile() {
   const history = useHistory();
@@ -165,9 +166,23 @@ export default function Profile() {
           <section className="space-y-6">
             <header className="text-3xl text-white font-bold">My Literature</header>
             <div className="flex flex-wrap gap-5 md:gap-20">
-              {books?.map((book) => (
-                <Literature key={book.id} to={`/detail/${book.id}`} thumbnail={book.thumbnail} title={book.title} author={book.author} year={book.year} />
-              ))}
+              {books.length > 0 ? (
+                <>
+                  {books?.map((book) => (
+                    <Literature key={book.id} to={`/detail/${book.id}`} thumbnail={book.thumbnail} title={book.title} author={book.author} year={book.year}>
+                      {book.status === 'Approve' ? (
+                        <></>
+                      ) : (
+                        <span className="absolute bg-white opacity-50 -top-2 right-0 w-full h-full z-20 flex justify-center items-center text-center">
+                          {book.status === 'Waiting Approve' ? <p className=" text-yellow-400 bg-black text-3xl font-black">On Verification</p> : <p className=" text-white text-3xl font-black bg-black">Canceled Publish</p>}
+                        </span>
+                      )}
+                    </Literature>
+                  ))}
+                </>
+              ) : (
+                <NoData desc="There is no data literatures" />
+              )}
             </div>
           </section>
         </div>

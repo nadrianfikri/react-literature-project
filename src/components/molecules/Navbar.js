@@ -1,12 +1,13 @@
-import { Fragment, useContext, useState } from 'react';
+import { Fragment, useContext, useEffect, useState } from 'react';
+import { useHistory } from 'react-router';
+import { Link } from 'react-router-dom';
 import { Popover, Transition, Menu } from '@headlessui/react';
 import { MenuIcon, XIcon } from '@heroicons/react/outline';
-import { AuthContext } from '../../context/authContext';
 
+import { AuthContext } from '../../context/authContext';
 import Button from '../atoms/Button';
 import { NavItem, NavLogo } from '../atoms/NavItems';
 import { LogoutMsg } from '../atoms/Message';
-import { useHistory } from 'react-router';
 
 export default function Navbar(props) {
   const history = useHistory();
@@ -25,6 +26,11 @@ export default function Navbar(props) {
       history.push('/');
     }, 1700);
   };
+
+  useEffect(() => {
+    const ac = new AbortController();
+    return () => ac.abort();
+  }, []);
 
   return (
     <nav className="container flex flex-row justify-between items-center px-4 md:px-0">
@@ -100,7 +106,7 @@ export default function Navbar(props) {
 
               <Menu as="div" className="relative inline-block pt-1 text-left ">
                 <Menu.Button className="">
-                  <img className="w-50 h-50 object-cover rounded-full border-2 border-gray-400" src="/assets/images/avatar.jpg" alt="avatar" />
+                  <img className="w-50 h-50 object-cover rounded-full border-2 border-gray-400" src={state?.user.avatar} alt="avatar" />
                 </Menu.Button>
                 <Transition
                   as={Fragment}
@@ -115,6 +121,12 @@ export default function Navbar(props) {
                     <span className="absolute -top-2 right-2 bg-white w-8 h-8 transform rotate-45"></span>
 
                     <>
+                      <Menu.Item>
+                        <Link to="/admin" className="relative flex py-4 pl-9 w-full gap-3 items-center hover:bg-gray-100 transition-all duration-300 rounded-lg ">
+                          <img className="w-10" src="/assets/icons/support 1.svg" alt="" />
+                          <p className="text-lg font-bold">Admin</p>
+                        </Link>
+                      </Menu.Item>
                       <Menu.Item>
                         <button onClick={handleLogout} type="button" className="relative flex py-4 pl-9 w-full gap-3 items-center hover:bg-gray-100 transition-all duration-300 rounded-lg ">
                           <img src="/assets/icons/logout.svg" alt="" />

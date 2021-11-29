@@ -8,20 +8,19 @@ import { API } from '../config/api';
 
 export default function SearchPage() {
   const history = useHistory();
-
   const url = new URLSearchParams(document.location.search.substring(1));
-  const [books, setBooks] = useState(null);
+  const titleSearch = url.get('title');
+
+  const [books, setBooks] = useState([]);
   const [dataYear, setDataYear] = useState(null);
   const [form, setForm] = useState({
-    title: '',
+    title: titleSearch,
     year: '',
   });
   const { title, year } = form;
 
   const getDataBooks = async () => {
     try {
-      const titleSearch = url.get('title');
-
       const res = await API.get('/literature/status/Approve');
       let datas = res.data.data;
 
@@ -41,17 +40,17 @@ export default function SearchPage() {
 
       setDataYear(Array.from(new Set(dataBooks.map((data) => data.year).sort((a, b) => b - a))));
       setBooks(filteredBook);
-      setForm({ ...form, title: '' });
 
       history.push(`/literature`);
     } catch (error) {
       console.log(error);
     }
   };
+
   useEffect(() => {
     getDataBooks();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [form]);
 
   const handleChange = (e) => {
     setForm({
@@ -83,14 +82,22 @@ export default function SearchPage() {
                     Select Year
                   </option>
                   {dataYear?.map((year) => (
-                    <Option value={year} field={year} />
+                    <Option key={year} value={year} field={year} />
                   ))}
                 </Select>
               </div>
               <div className="flex flex-wrap gap-5 md:gap-20 ">
-                {books?.map((book) => (
-                  <Literature to={`/detail/${book.id}`} title={book.title} author={book.author} year={book.year} thumbnail={book.thumbnail} />
-                ))}
+                {books.length > 0 ? (
+                  <>
+                    {books?.map((book) => (
+                      <Literature key={book.id} to={`/detail/${book.id}`} title={book.title} author={book.author} year={book.year} thumbnail={book.thumbnail} />
+                    ))}
+                  </>
+                ) : (
+                  <p className="text-gray-200 text-xl">
+                    Search result: {title} {year && `was publication in ${year}`} is not found
+                  </p>
+                )}
               </div>
             </section>
           </form>

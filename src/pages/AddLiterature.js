@@ -84,7 +84,7 @@ export default function AddLiterature() {
       setMessage(alert);
 
       setTimeout(() => {
-        history.push('/literature');
+        history.push('/profile');
       }, 1700);
     } catch (error) {
       console.log(error);

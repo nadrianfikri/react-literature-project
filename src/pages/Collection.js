@@ -1,4 +1,5 @@
 import { useState, useEffect, useContext } from 'react';
+import NoData from '../components/atoms/NoData';
 import Literature from '../components/molecules/Literature';
 import Header from '../components/organism/Header';
 import { API } from '../config/api';
@@ -30,7 +31,6 @@ export default function Collection() {
     getDataCollections();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [state]);
-  console.log(collections);
 
   return (
     <div>
@@ -40,9 +40,15 @@ export default function Collection() {
           <section className="space-y-6">
             <header className="text-3xl text-white font-bold">My Collection</header>
             <div className="flex flex-wrap gap-5 md:gap-20">
-              {collections?.map((item) => (
-                <Literature to={`/detail/${item.literature.id}`} thumbnail={item.literature.thumbnail} title={item.literature.title} author={item.literature.author} year={item.literature.year} />
-              ))}
+              {collections.length > 0 ? (
+                <>
+                  {collections?.map((item) => (
+                    <Literature to={`/detail/${item.literature.id}`} thumbnail={item.literature.thumbnail} title={item.literature.title} author={item.literature.author} year={item.literature.year} />
+                  ))}
+                </>
+              ) : (
+                <NoData desc="Add and put your own literature collection here" />
+              )}
             </div>
           </section>
         </div>

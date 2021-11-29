@@ -1,4 +1,4 @@
-import { useState, useContext } from 'react';
+import { useState, useContext, useEffect } from 'react';
 import { API, setAuthToken } from '../config/api';
 import { AuthContext } from '../context/authContext';
 import { useHistory } from 'react-router';
@@ -132,11 +132,27 @@ export default function Home() {
           setMessage(null);
           history.push('/');
         }
-      }, 2000);
+      }, 2400);
 
-      setMessage(LoginMsg);
+      setOpenRgs(false);
+      setTimeout(() => {
+        setMessage(LoginMsg);
+      }, 400);
     } catch (error) {
       console.log(error);
+      const alert = (
+        <Alert
+          variant="red"
+          message="Register Failed Please Recheck Your Data"
+          onClick={() => {
+            setMessage(null);
+          }}
+        />
+      );
+      setMessage(alert);
+      setTimeout(() => {
+        setMessage(null);
+      }, 1500);
     }
   };
 
@@ -145,6 +161,10 @@ export default function Home() {
     setOpenLgn(!openLgn);
   };
 
+  useEffect(() => {
+    const ac = new AbortController();
+    return () => ac.abort();
+  }, []);
   return (
     <div className="relative">
       {message && message}
