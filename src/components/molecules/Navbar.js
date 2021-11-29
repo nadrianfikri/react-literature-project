@@ -6,9 +6,10 @@ import { AuthContext } from '../../context/authContext';
 import Button from '../atoms/Button';
 import { NavItem, NavLogo } from '../atoms/NavItems';
 import { LogoutMsg } from '../atoms/Message';
-// import { useParams } from 'react-router';
+import { useHistory } from 'react-router';
 
 export default function Navbar(props) {
+  const history = useHistory();
   const [state, dispatch] = useContext(AuthContext);
   const [message, setMessage] = useState(null);
 
@@ -19,8 +20,10 @@ export default function Navbar(props) {
       dispatch({
         type: 'LOGOUT',
       });
+
       setMessage(null);
-    }, 2000);
+      history.push('/');
+    }, 1700);
   };
 
   return (

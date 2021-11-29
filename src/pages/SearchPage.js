@@ -21,7 +21,6 @@ export default function SearchPage() {
   const getDataBooks = async () => {
     try {
       const titleSearch = url.get('title');
-      console.log(titleSearch);
 
       const res = await API.get('/literature/status/Approve');
       let datas = res.data.data;
@@ -51,6 +50,7 @@ export default function SearchPage() {
   };
   useEffect(() => {
     getDataBooks();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const handleChange = (e) => {
@@ -89,7 +89,7 @@ export default function SearchPage() {
               </div>
               <div className="flex flex-wrap gap-5 md:gap-20 ">
                 {books?.map((book) => (
-                  <Literature to={`/detail/${book.id}`} title={book.title} author={book.author} year={book.year} thumbnail="/assets/images/pdf.png" />
+                  <Literature to={`/detail/${book.id}`} title={book.title} author={book.author} year={book.year} thumbnail={book.thumbnail} />
                 ))}
               </div>
             </section>
