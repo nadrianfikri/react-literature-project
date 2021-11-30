@@ -44,7 +44,6 @@ function App() {
     setTimeout(() => {
       setLoading(false);
     }, 1500);
-
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -55,7 +54,6 @@ function App() {
           <img src="/assets/icons/Book.gif" alt="loading" />
         </div>
       ) : (
-        // <SkeletonHome />
         <Switch>
           <Route exact path="/" component={state.isLogin ? Home : Landing} />
           <PrivateRoute path="/literature" component={SearchPage} />

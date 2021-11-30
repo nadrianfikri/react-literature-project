@@ -2,6 +2,7 @@ import { useState, useEffect, useContext } from 'react';
 import { useHistory } from 'react-router';
 import { API } from '../config/api';
 import { AuthContext } from '../context/authContext';
+import { TrashIcon } from '@heroicons/react/outline';
 
 import Button from '../components/atoms/Button';
 import DataUser from '../components/organism/DataUser';
@@ -145,9 +146,9 @@ export default function Profile() {
       <main className="pt-24 bg-primary flex justify-center min-h-screen ">
         <div className="container flex flex-col gap-10 px-6 md:px-0 pb-20">
           {/* profile */}
-          <section className="space-y-6">
-            <header className="text-3xl text-white font-bold">Profile</header>
-            <div className="bg-secondary flex flex-col-reverse md:flex-row justify-between rounded-lg p-8 gap-8">
+          <section className="space-y-6 ">
+            <header className="text-3xl text-white font-bold self-start">Profile</header>
+            <div className="bg-secondary flex flex-col-reverse md:flex-row justify-between rounded-lg p-8 gap-8 ">
               {/* datauser */}
               <div className="flex flex-col justify-around space-y-4 md:space-y-0">
                 <DataUser icon="/assets/icons/email.svg" desc="Email" name={state?.user.email} />
@@ -173,9 +174,23 @@ export default function Profile() {
                       {book.status === 'Approve' ? (
                         <></>
                       ) : (
-                        <span className="absolute bg-white opacity-50 -top-2 right-0 w-full h-full z-20 flex justify-center items-center text-center">
-                          {book.status === 'Waiting Approve' ? <p className=" text-yellow-400 bg-black text-3xl font-black">On Verification</p> : <p className=" text-white text-3xl font-black bg-black">Canceled Publish</p>}
-                        </span>
+                        <>
+                          {book.status === 'Cancel' ? (
+                            <button className="absolute -top-2 -right-2 z-30 p-1 rounded-full bg-white border-2 border-red-600">
+                              <TrashIcon className="w-8 h-8 text-red-600" />
+                            </button>
+                          ) : (
+                            <></>
+                          )}
+                          <span></span>
+                          <span className="absolute bg-white opacity-50 -top-2 right-0 w-full h-72 z-20 flex justify-center items-center text-center">
+                            {book.status === 'Waiting Approve' ? (
+                              <p className=" relative z-30 text-yellow-400 bg-black text-3xl font-black">On Verification</p>
+                            ) : (
+                              <p className=" text-red-500 text-3xl font-black bg-black">Canceled Publish</p>
+                            )}
+                          </span>
+                        </>
                       )}
                     </Literature>
                   ))}

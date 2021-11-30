@@ -56,7 +56,7 @@ export default function Navbar(props) {
                 <NavItem to="/profile" text="Profile" />
                 <NavItem to="/collection" text="My Collection" />
                 <NavItem to="/add-literature" text="Add Literature" />
-                <Button onClick={handleLogout} type="button" text="Logout" className="text-lg text-gray-200 py-0 hover:text-red-700" />
+                <Button onClick={handleLogout} type="button" text="Logout" className="text-lg text-gray-200 py-0 hover:text-red-600" />
               </Popover.Group>
 
               {/* panel when small width */}

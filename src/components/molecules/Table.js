@@ -34,7 +34,7 @@ function TData2(props) {
       </td>
       <td className={`font-bold text-${props.statusStyle}-500 py-4`}>{props.status}</td>
       <td>
-        <div className="flex gap-4 w-full ">
+        <div className="flex gap-4 w-full justify-center ">
           {props.status === 'Waiting Approve' ? (
             <>
               <button id={props.id} onClick={props.onCancel} type="button" name="Cancel" className="bg-red-500 rounded-md p-1 w-full md:w-28">

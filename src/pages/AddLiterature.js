@@ -1,14 +1,17 @@
 import { useRef, useState } from 'react';
+import { useHistory } from 'react-router';
+import { API } from '../config/api';
+
 import Button from '../components/atoms/Button';
 import Alert from '../components/atoms/Alert';
 import { Input, InputFile } from '../components/atoms/Form';
 import Header from '../components/organism/Header';
-import { API } from '../config/api';
-import { useHistory } from 'react-router';
+import { Modal, ModalTitle, Animate } from '../components/molecules/Modal';
 
 export default function AddLiterature() {
   const ref = useRef();
   const history = useHistory();
+  const [isOpen, setIsOpen] = useState(false);
   const [message, setMessage] = useState(null);
   const [preview, setPreview] = useState({
     thumbnail: '',
@@ -112,18 +115,33 @@ export default function AddLiterature() {
                 className={`p-2 w-full bg-input text-gray-300 rounded-md focus:outline-none border-2 border-gray-500 placeholder-gray-300`}
               />
               <Input type="number" placeholder="Pages" name="pages" value={pages} onChange={handleChange} />
-              <Input type="number" placeholder="ISBN" name="ISBN" value={ISBN} onChange={handleChange} />
+              <Input type="text" placeholder="ISBN" name="ISBN" value={ISBN} onChange={handleChange} />
               <Input type="text" placeholder="Author" name="author" value={author} onChange={handleChange} />
               <div className="flex gap-6 pb-4">
                 <InputFile name="attach" text="Attach Book File" onChange={handleChange} />
                 <InputFile name="thumbnail" text="Attach Thumbnail" onChange={handleChange} />
               </div>
 
-              <Button type="submit" text="Add Literature" className="bg-danger text-white float-right px-8 font-bold" />
+              <Button onClick={() => setIsOpen(true)} type="button" text="Add Literature" className="bg-danger text-white float-right px-8 font-bold" />
               <div className="flex gap-4 pb-4">
                 {preview.attach !== '' && <iframe title={preview.attach} width="200px" height="288px" src={`${preview.attach}#toolbar=0`} alt={preview.attach} />}
                 {preview.thumbnail !== '' && <img className="w-52 h-72" src={preview.thumbnail} alt={preview.thumbnail} />}
               </div>
+              <Animate show={isOpen}>
+                <Modal>
+                  <ModalTitle text={`Confirm`} onClose={() => setIsOpen(false)} />
+                  <div className="text-sm text-gray-200 pb-4">
+                    <p className="">Title: {title}</p>
+                    <p className="">ISBN: {ISBN}</p>
+                  </div>
+                  <p className="text-gray-200 text-lg text-center font-bold">You will apply this book for verification</p>
+                  <div className="flex gap-4 justify-center">
+                    <Button onClick={() => setIsOpen(false)} type="button" text="Cancel" className="bg-red-500 text-white w-full mt-6" />
+                    <Button type="submit" text="Add Literature" className="bg-green-500 text-white w-full mt-6" />
+                  </div>
+                  <p className="text-gray-400 text-xs text-center mt-2">Make sure the book meets the verification requirements</p>
+                </Modal>
+              </Animate>
             </form>
           </section>
         </div>

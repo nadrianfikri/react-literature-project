@@ -50,7 +50,7 @@ export default function SearchPage() {
   useEffect(() => {
     getDataBooks();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [form]);
+  }, []);
 
   const handleChange = (e) => {
     setForm({
@@ -79,7 +79,7 @@ export default function SearchPage() {
                 <p className="text-lg text-red-800  ml-2">Anytime</p>
                 <Select onChange={handleChange} name="year">
                   <option value="" className="bg-primary">
-                    Select Year
+                    All
                   </option>
                   {dataYear?.map((year) => (
                     <Option key={year} value={year} field={year} />
