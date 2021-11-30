@@ -10,6 +10,7 @@ import Header from '../components/organism/Header';
 import Literature from '../components/molecules/Literature';
 import { Modal, ModalTitle, Animate } from '../components/molecules/Modal';
 import NoData from '../components/atoms/NoData';
+import Alert from '../components/atoms/Alert';
 
 export default function Profile() {
   const history = useHistory();
@@ -18,6 +19,7 @@ export default function Profile() {
   const [state, dispatch] = useContext(AuthContext);
 
   const [isOpen, setIsOpen] = useState(false);
+  const [message, setMessage] = useState(null);
   const [preview, setPreview] = useState(null);
   const [form, setForm] = useState({
     email: '',
@@ -135,19 +137,41 @@ export default function Profile() {
     }
   };
 
+  // Create function for handle delete
+  const handleDelete = async (id) => {
+    try {
+      await API.delete(`/literature/${id}`);
+
+      const alert = (
+        <Alert
+          variant="blue"
+          message="You can resubmit publications by creating a new order"
+          onClick={() => {
+            setMessage(null);
+          }}
+        />
+      );
+      getDataBooks();
+      setMessage(alert);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   useEffect(() => {
     getDataBooks();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [state]);
 
   return (
-    <div>
+    <div className="relative">
       <Header />
+      {message && message}
       <main className="pt-24 bg-primary flex justify-center min-h-screen ">
         <div className="container flex flex-col gap-10 px-6 md:px-0 pb-20">
+          <header className="text-3xl text-white font-bold self-start">Profile</header>
           {/* profile */}
-          <section className="space-y-6 ">
-            <header className="text-3xl text-white font-bold self-start">Profile</header>
+          <section className="space-y-6 lg:w-3/4 lg:self-center pb-20">
             <div className="bg-secondary flex flex-col-reverse md:flex-row justify-between rounded-lg p-8 gap-8 ">
               {/* datauser */}
               <div className="flex flex-col justify-around space-y-4 md:space-y-0">
@@ -176,20 +200,19 @@ export default function Profile() {
                       ) : (
                         <>
                           {book.status === 'Cancel' ? (
-                            <button className="absolute -top-2 -right-2 z-30 p-1 rounded-full bg-white border-2 border-red-600">
+                            <button onClick={() => handleDelete(book.id)} className="flex justify-center absolute -top-2 -right-4 z-30 p-1 rounded-full w-16 bg-gray-300 border border-red-600">
                               <TrashIcon className="w-8 h-8 text-red-600" />
                             </button>
                           ) : (
                             <></>
                           )}
                           <span></span>
-                          <span className="absolute bg-white opacity-50 -top-2 right-0 w-full h-72 z-20 flex justify-center items-center text-center">
-                            {book.status === 'Waiting Approve' ? (
-                              <p className=" relative z-30 text-yellow-400 bg-black text-3xl font-black">On Verification</p>
-                            ) : (
-                              <p className=" text-red-500 text-3xl font-black bg-black">Canceled Publish</p>
-                            )}
-                          </span>
+                          <span className="absolute bg-white opacity-50 -top-2 right-0 w-full h-72 z-20 flex justify-center items-center text-center"></span>
+                          {book.status === 'Waiting Approve' ? (
+                            <span className=" absolute top-1/2 transform -translate-y-3/4 text-center z-20 text-yellow-400 text-3xl font-black bg-black bg-opacity-50">On Verification</span>
+                          ) : (
+                            <span className="absolute top-1/2 transform -translate-y-3/4 text-center z-20 text-red-500 text-3xl font-black bg-black bg-opacity-50 ">Canceled Publish</span>
+                          )}
                         </>
                       )}
                     </Literature>

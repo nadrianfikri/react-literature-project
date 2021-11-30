@@ -80,9 +80,11 @@ export default function Detail() {
       <Header />
       <main className="pt-24 bg-primary flex justify-center min-h-screen ">
         <div className="container flex flex-col-reverse md:flex-row justify-center md:justify-between gap-8 px-6 md:px-4 flex-wrap">
+          {/* preview pdf */}
           <section className=" self-center md:self-auto ">
             <PdfPreview file={book?.attach} />
           </section>
+          {/* info literature */}
           <section className=" flex-1 space-y-8">
             <InfoHeader title={book?.title} author={book?.author} />
             <InfoLiterature data={book?.publication_date} desc="Publication Date" />
@@ -90,15 +92,23 @@ export default function Detail() {
             <InfoLiterature textColor="text-red-700" data={book?.ISBN} desc="ISBN" />
             <Download link={book?.attach} />
           </section>
+
+          {/* button collection */}
           <section className="w-max">
-            {bookmark === null ? (
-              <button onClick={addCollection} className=" flex justify-center items-center gap-4 bg-danger rounded p-2 text-white">
-                Add My Collection <BookmarkIcon className="h-5 text-white" />
-              </button>
+            {book?.status === 'Approve' ? (
+              <>
+                {bookmark === null ? (
+                  <button onClick={addCollection} className=" flex justify-center items-center gap-4 bg-danger rounded p-2 text-white">
+                    Add My Collection <BookmarkIcon className="h-5 text-white" />
+                  </button>
+                ) : (
+                  <button onClick={removeCollection} className=" flex justify-center items-center gap-4 bg-danger rounded p-2 text-white">
+                    Remove Collection <Bookmarked className="h-5 text-white" />
+                  </button>
+                )}
+              </>
             ) : (
-              <button onClick={removeCollection} className=" flex justify-center items-center gap-4 bg-danger rounded p-2 text-white">
-                Remove Collection <Bookmarked className="h-5 text-white" />
-              </button>
+              <span className=" flex justify-center items-center gap-4 bg-gray-800 rounded p-2 text-white">This book has not passed verification</span>
             )}
           </section>
         </div>
