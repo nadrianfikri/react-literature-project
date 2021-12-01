@@ -92,7 +92,7 @@ export default function Navbar() {
                 leaveFrom="opacity-100 scale-100"
                 leaveTo="opacity-0 scale-95"
               >
-                <Popover.Panel focus className="absolute top-0 inset-x-0 p-2 transition transform origin-top-right md:hidden">
+                <Popover.Panel focus className="absolute z-50 top-0 inset-x-0 p-2 transition transform origin-top-right md:hidden">
                   <div className="rounded-lg shadow-lg ring-1 ring-black ring-opacity-5 bg-primary ">
                     <div className="pt-4 pb-4 px-5">
                       <div className="flex items-center justify-between">
@@ -106,7 +106,7 @@ export default function Navbar() {
                       </div>
                     </div>
                     <div className="py-4 px-5 space-y-6">
-                      <div className="space-y-2-4 w-full">
+                      <div className="space-y-2-4 w-full flex flex-col">
                         <NavItem to="/profile" text="Profile" />
                         <NavItem to="/collection" text="My Collection" />
                         <NavItem to="/add-literature" text="Add Literature" />
@@ -157,7 +157,6 @@ export default function Navbar() {
                       <div className="rounded-lg">
                         <Menu.Item>
                           <Link to={`/detail/${item.id}`} className="py-2 px-4 flex gap-2 hover:bg-gray-300 transition-all duration-300">
-                            {/* <img className="w-8 h-8 object-cover object-center rounded-full" src={item?.profile?.avatar} alt="avatar" /> */}
                             <div className="overflow-hidden">
                               <h1 className="font-bold line-clamp-1">{item.title}</h1>
                               <p className="text-xs text-green-600">New released at {item.updatedAt}</p>
