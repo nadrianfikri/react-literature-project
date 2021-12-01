@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom';
+import { Link, NavLink } from 'react-router-dom';
 
 function NavLogo(props) {
   return (
@@ -9,9 +9,10 @@ function NavLogo(props) {
 }
 function NavItem(props) {
   return (
-    <Link to={props.to}>
-      <p className={`text-gray-200 text-lg hover:text-white ${props.className}`}>{props.text}</p>
-    </Link>
+    <NavLink activeClassName="text-red-600" to={props.to} className={`group flex flex-col items-center text-gray-200 text-lg hover:text-red-600 ${props.className}`}>
+      {props.text}
+      <NavLink to={props.to} activeClassName="w-1/2 bg-danger" style={{ height: 2 }} className="w-0  group-hover:bg-danger group-hover:w-1/2 transition-all duration-500 "></NavLink>
+    </NavLink>
   );
 }
 

@@ -1,3 +1,5 @@
+import { XCircleIcon, CheckCircleIcon } from '@heroicons/react/solid';
+
 function Table2({ children }) {
   return <table className="table-auto text-left overflow-auto bg-white">{children}</table>;
 }
@@ -30,16 +32,21 @@ function TData2(props) {
           <p>{props.title}.pdf</p>
         </a>
       </td>
-      <td className={`font-bold ${props.statusStyle} py-4`}>{props.status}</td>
+      <td className={`font-bold text-${props.statusStyle}-500 py-4`}>{props.status}</td>
       <td>
-        <div className="flex gap-4 w-full ">
-          {/* <img className="h-8" id={props.id} src="/assets/icons/check.svg" alt="icon" /> */}
-          <button id={props.id} onClick={props.onCancel} type="button" className="bg-red-500 rounded-md p-1 w-full md:w-28">
-            Cancel
-          </button>
-          <button id={props.id} onClick={props.onApprove} type="button" className="bg-green-500 rounded-md p-1 w-full md:w-28">
-            Approve
-          </button>
+        <div className="flex gap-4 w-full justify-center ">
+          {props.status === 'Waiting Approve' ? (
+            <>
+              <button id={props.id} onClick={props.onCancel} type="button" name="Cancel" className="bg-red-500 rounded-md p-1 w-full md:w-28">
+                Cancel
+              </button>
+              <button id={props.id} onClick={props.onApprove} type="button" name="Approve" className="bg-green-500 rounded-md p-1 w-full md:w-28">
+                Approve
+              </button>
+            </>
+          ) : (
+            <>{props.status === 'Approve' ? <CheckCircleIcon id={props.id} className="h-8 w-8  text-green-400" /> : <XCircleIcon id={props.id} className="h-8 w-8  text-red-400" />}</>
+          )}
         </div>
       </td>
     </tr>
