@@ -200,15 +200,15 @@ export default function Home() {
           {({ errors, touched }) => (
             <Form className="w-full flex-col justify-center items-center p-6 border-2 space-y-5 border-gray-300">
               <div className="relative">
-                <Field className="bg-primary border border-gray-400 w-full" name="fullname" placeholder="input" />
-                {errors.fullname && touched.fullname ? <div className="absolute top-6 text-red-400 text-xs mt-1">{errors.fullname}</div> : null}
+                <Field className="bg-primary border border-gray-400 w-full" name="fullname" placeholder="Full name" />
+                {errors.fullname && touched.password ? <div className="absolute top-6 text-red-400 text-xs mt-1">{errors.fullname}</div> : null}
               </div>
               <div className="relative">
-                <Field className="bg-primary border border-gray-400 w-full" name="password" type="password" placeholder="input" />
-                {errors.password && touched.password ? <div className="absolute top-6 text-red-400 text-xs mt-1">{errors.password}</div> : null}
+                <Field className="bg-primary border border-gray-400 w-full" name="password" type="password" placeholder="Password" />
+                {touched.password && errors.password ? <div className="absolute top-6 text-red-400 text-xs mt-1">{errors.password}</div> : null}
               </div>
               <div className="relative">
-                <Field className="bg-primary border border-gray-400 w-full" name="email" type="email" placeholder="input" />
+                <Field className="bg-primary border border-gray-400 w-full" name="email" type="email" placeholder="Email" />
                 {errors.email && touched.email ? <div className="absolute top-6 text-red-400 text-xs mt-1">{errors.email}</div> : null}
               </div>
               <button type="submit">Submit</button>
