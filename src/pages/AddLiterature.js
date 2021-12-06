@@ -69,8 +69,8 @@ export default function AddLiterature() {
       formData.set('pages', pages);
       formData.set('ISBN', ISBN);
       formData.set('author', author);
-      formData.set('attach', attach[0]);
-      formData.set('thumbnail', thumbnail[0]);
+      formData.set('attach', attach[0], attach[0].filename);
+      formData.set('thumbnail', thumbnail[0], thumbnail[0].filename);
 
       // post data to database
       await API.post('/literature', formData, config);
