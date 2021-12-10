@@ -7,8 +7,9 @@ export default function Login(props) {
     <Animate show={props.show}>
       <Modal>
         <ModalTitle text="Sign Up" onClose={props.onClose} />
-        <form action="/" method="post" onSubmit={props.onSubmit}>
-          <div className="space-y-4 w-72 relative">{props.children}</div>
+
+        <form onSubmit={props.onSubmit}>
+          <div className="space-y-5 w-72 relative">{props.children}</div>
           <Button type="submit" text="Sign Up" className="bg-danger text-white w-full mt-8" />
           <DirectLink text="Already have an account ?  Klik " textLink="Here" onClick={props.onDirect} />
         </form>
