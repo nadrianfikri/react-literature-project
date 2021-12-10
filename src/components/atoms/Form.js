@@ -11,12 +11,6 @@ function Input(props) {
         onInput={props.onInput}
         onFocus={props.onFocus}
         onBlur={props.onBlur}
-<<<<<<< HEAD
-=======
-        onInput={props.onInput}
->>>>>>> d3ef355a8f3b79efb4c329b07c56d6399d9876d4
-        ref={props.ref}
-        required
       />
       {props.children}
     </div>
