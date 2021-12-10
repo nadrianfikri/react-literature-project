@@ -85,12 +85,12 @@ export default function Navbar() {
               <Transition
                 //
                 as={Fragment}
-                enter="duration-200 ease-out"
-                enterFrom="opacity-0 scale-95"
-                enterTo="opacity-100 scale-100"
-                leave="duration-200 ease-in"
-                leaveFrom="opacity-100 scale-100"
-                leaveTo="opacity-0 scale-95"
+                enter="transition ease-out duration-300"
+                enterFrom="transform opacity-0 -translate-y-full"
+                enterTo="transform opacity-100 translate-y-0"
+                leave="transition ease-in duration-300"
+                leaveFrom="transform opacity-100 translate-y-0"
+                leaveTo="transform opacity-0 -translate-y-full"
               >
                 <Popover.Panel focus className="absolute z-50 top-0 inset-x-0 p-2 transition transform origin-top-right md:hidden">
                   <div className="rounded-lg shadow-lg ring-1 ring-black ring-opacity-5 bg-primary ">
@@ -106,7 +106,7 @@ export default function Navbar() {
                       </div>
                     </div>
                     <div className="py-4 px-5 space-y-6">
-                      <div className="space-y-2-4 w-full flex flex-col">
+                      <div className="space-y-2-4 w-full flex flex-col items-start">
                         <NavItem to="/profile" text="Profile" />
                         <NavItem to="/collection" text="My Collection" />
                         <NavItem to="/add-literature" text="Add Literature" />
@@ -213,16 +213,28 @@ export default function Navbar() {
                     leaveTo="transform opacity-0 -translate-y-10"
                   >
                     <Menu.Items className="absolute overflow-auto -right-1 mt-2 w-80 max-h-72 origin-top-right bg-white divide-y  rounded-md shadow-lg text-gray-700 ">
-                      {books?.map((item) => (
+                      <div className="rounded-lg">
+                        <Menu.Item>
+                          <Link to="/admin" className="py-2 px-4 flex gap-2 hover:bg-gray-300 transition-all duration-300">
+                            <div className="overflow-hidden">
+                              <h1 className="font-bold line-clamp-1">
+                                There is {notification.length} book{notification.length > 1 ? 's' : null} waiting for review
+                              </h1>
+                              <p className="text-xs text-green-600">{notification.length > 0 ? "Let's Go to push verification" : 'Just relax'} </p>
+                            </div>
+                          </Link>
+                        </Menu.Item>
+                      </div>
+                      {notification?.map((item) => (
                         <div className="rounded-lg">
                           <Menu.Item>
                             <Link to="/admin" className="py-2 px-4 flex gap-2 hover:bg-gray-300 transition-all duration-300">
                               <img className="w-8 h-8 object-cover object-center rounded-full" src={item?.profile?.avatar} alt="avatar" />
                               <div className="overflow-hidden">
-                                <h1 className="font-bold line-clamp-1">The Book {item.status}</h1>
+                                <h1 className="font-bold line-clamp-1">{item.profile?.fullname}</h1>
                                 <p className="text-xs text-green-600">{item.updatedAt}</p>
                                 <p className="text-xs text-gray-400 line-clamp-2 ">
-                                  {item?.profile?.fullname} - {item.title}
+                                  {item?.author} - {item.title}
                                 </p>
                               </div>
                             </Link>

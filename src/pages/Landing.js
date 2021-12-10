@@ -172,9 +172,30 @@ export default function Home() {
       <Hero onSignUp={() => setOpenRgs(true)} onSignIn={() => setOpenLgn(true)} />
 
       <Register show={openRgs} onClose={() => setOpenRgs(false)} onSubmit={handleRegister} onDirect={openAnotherModal}>
-        <Input type="email" placeholder="Email" name="email" value={email} onChange={handleChange} />
-        <Input type="password" placeholder="Password" name="password" value={password} onChange={handleChange} />
-        <Input type="text" placeholder="Full name" name="fullname" value={fullname} onChange={handleChange} />
+        <Input
+          //
+          type="email"
+          placeholder="Email"
+          name="email"
+          value={email}
+          onChange={handleChange}
+        />
+        <Input
+          //
+          type="password"
+          placeholder="Password"
+          name="password"
+          value={password}
+          onChange={handleChange}
+        />
+        <Input
+          //
+          type="text"
+          placeholder="Full name"
+          name="fullname"
+          value={fullname}
+          onChange={handleChange}
+        />
         <Select onChange={handleChange} name="gender">
           <option value="DEFAULT" disabled className="bg-primary">
             Gender
@@ -182,8 +203,22 @@ export default function Home() {
           <Option value="Male" field="Male" />
           <Option value="Female" field="Female" />
         </Select>
-        <Input type="number" placeholder="Phone" name="phone" value={phone} onChange={handleChange} />
-        <Input type="text" placeholder="Address" name="address" value={address} onChange={handleChange} />
+        <Input
+          //
+          type="number"
+          placeholder="Phone"
+          name="phone"
+          value={phone}
+          onChange={handleChange}
+        />
+        <Input
+          //
+          type="text"
+          placeholder="Address"
+          name="address"
+          value={address}
+          onChange={handleChange}
+        />
       </Register>
 
       <Login show={openLgn} onClose={() => setOpenLgn(false)} onSubmit={handleLogin} onDirect={openAnotherModal}>
@@ -193,3 +228,8 @@ export default function Home() {
     </div>
   );
 }
+
+// error validation
+const ErrorMsg = ({ children }) => {
+  return <div className="absolute left-1 text-red-400 text-xs">{children}</div>;
+};
