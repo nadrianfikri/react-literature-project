@@ -31,7 +31,7 @@ export default function Home() {
     address: '',
   });
 
-  const { email, password, fullname, phone, address } = form;
+  const { email, password } = form;
 
   // function to monitor every changes char in form input to form state
   const handleChange = (e) => {
@@ -167,11 +167,6 @@ export default function Home() {
   };
 
   // -------------------------------------------//
-  // -------------------------------------------//
-
-  // const doregister = (values) => {
-  //   console.log('form values', values);
-  // };
 
   // HANDLE FORM INPUT WITH FORMIK customHooks
 
@@ -213,9 +208,6 @@ export default function Home() {
           name="email"
           onInput={() => formik.setTouched({ ...formik.touched, email: true })}
           {...formik.getFieldProps('email')}
-          // value={formik.values.email}
-          // onChange={formik.handleChange}
-          // onBlur={formik.handleBlur}
         >
           {formik.touched.email && formik.errors.email && <ErrorMsg>{formik.errors.email}</ErrorMsg>}
         </Input>
