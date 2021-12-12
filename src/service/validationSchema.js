@@ -31,3 +31,8 @@ export const signupSchema = Yup.object({
     .required('Address cannot be empty')
     .min(5, 'Should more than 5 characters'),
 });
+
+export const loginSchema = Yup.object({
+  email: Yup.string().email('Invalid email format').required('Email cannot be empty'),
+  password: Yup.string().required('Password cannot be empty').min(6, 'Password should more than 6 characters'),
+});

@@ -3,7 +3,7 @@ import { API, setAuthToken } from '../config/api';
 import { AuthContext } from '../context/authContext';
 import { useHistory } from 'react-router';
 import { useFormik } from 'formik';
-import { signupSchema } from '../service/validationSchema';
+import { signupSchema, loginSchema } from '../service/validationSchema';
 
 import { Input, Option, Select } from '../components/atoms/Form';
 import { LoginMsg } from '../components/atoms/Message';
@@ -21,30 +21,10 @@ export default function Home() {
   const [openLgn, setOpenLgn] = useState(false);
   const [openRgs, setOpenRgs] = useState(false);
   const [message, setMessage] = useState(null);
-  // store data with useState
-  const [form, setForm] = useState({
-    email: '',
-    password: '',
-    fullname: '',
-    gender: '',
-    phone: '',
-    address: '',
-  });
-
-  const { email, password } = form;
-
-  // function to monitor every changes char in form input to form state
-  const handleChange = (e) => {
-    setForm({
-      ...form,
-      [e.target.name]: e.target.value,
-    });
-  };
 
   // create function handle login, check data user
-  const handleLogin = async (e) => {
+  const handleLogin = async (values) => {
     try {
-      e.preventDefault();
       // create config content-type
       const config = {
         headers: {
@@ -53,10 +33,7 @@ export default function Home() {
       };
 
       // convert form data to string
-      const body = JSON.stringify({
-        email,
-        password,
-      });
+      const body = JSON.stringify(values);
 
       // insert data user for login process
       const res = await API.post('/login', body, config);
@@ -84,10 +61,6 @@ export default function Home() {
       }, 2000);
 
       setMessage(LoginMsg);
-      setForm({
-        email: '',
-        password: '',
-      });
     } catch (error) {
       console.log(error);
       const alert = (
@@ -167,28 +140,32 @@ export default function Home() {
   };
 
   // -------------------------------------------//
-
   // HANDLE FORM INPUT WITH FORMIK customHooks
-
-  const formik = useFormik({
-    // init value
-    initialValues: {
-      email: '',
-      password: '',
-      fullname: '',
-      gender: '',
-      phone: '',
-      address: '',
-    },
-
-    // validation schema with yup
-    validationSchema: signupSchema,
-
-    // handle submit
-    onSubmit: handleRegister,
-  });
-
-  // console.log(formik);
+  const formik = {
+    rgs: useFormik({
+      // init value
+      initialValues: {
+        email: '',
+        password: '',
+        fullname: '',
+        gender: '',
+        phone: '',
+        address: '',
+      },
+      // validation schema with yup
+      validationSchema: signupSchema,
+      // handle submit
+      onSubmit: handleRegister,
+    }),
+    lgn: useFormik({
+      initialValues: {
+        email: '',
+        password: '',
+      },
+      validationSchema: loginSchema,
+      onSubmit: handleLogin,
+    }),
+  };
 
   useEffect(() => {
     const ac = new AbortController();
@@ -200,26 +177,26 @@ export default function Home() {
       <Header />
       <Hero onSignUp={() => setOpenRgs(true)} onSignIn={() => setOpenLgn(true)} />
 
-      <Register show={openRgs} onClose={() => setOpenRgs(false)} onSubmit={formik.handleSubmit} onDirect={openAnotherModal}>
+      <Register show={openRgs} onClose={() => setOpenRgs(false)} onSubmit={formik.rgs.handleSubmit} onDirect={openAnotherModal}>
         <Input
           //
           type="email"
           placeholder="Email"
           name="email"
-          onInput={() => formik.setTouched({ ...formik.touched, email: true })}
-          {...formik.getFieldProps('email')}
+          onInput={() => formik.rgs.setTouched({ ...formik.rgs.touched, email: true })}
+          {...formik.rgs.getFieldProps('email')}
         >
-          {formik.touched.email && formik.errors.email && <ErrorMsg>{formik.errors.email}</ErrorMsg>}
+          {formik.rgs.touched.email && formik.rgs.errors.email && <ErrorMsg>{formik.rgs.errors.email}</ErrorMsg>}
         </Input>
         <Input
           //
           type="password"
           placeholder="Password"
           name="password"
-          onInput={() => formik.setTouched({ ...formik.touched, password: true })}
-          {...formik.getFieldProps('password')}
+          onInput={() => formik.rgs.setTouched({ ...formik.rgs.touched, password: true })}
+          {...formik.rgs.getFieldProps('password')}
         >
-          {formik.touched.password && formik.errors.password && <ErrorMsg>{formik.errors.password}</ErrorMsg>}
+          {formik.rgs.touched.password && formik.rgs.errors.password && <ErrorMsg>{formik.rgs.errors.password}</ErrorMsg>}
         </Input>
 
         <Input
@@ -227,20 +204,20 @@ export default function Home() {
           type="text"
           placeholder="Full name"
           name="fullname"
-          onInput={() => formik.setTouched({ ...formik.touched, fullname: true })}
-          {...formik.getFieldProps('fullname')}
+          onInput={() => formik.rgs.setTouched({ ...formik.rgs.touched, fullname: true })}
+          {...formik.rgs.getFieldProps('fullname')}
         >
-          {formik.touched.fullname && formik.errors.fullname && <ErrorMsg>{formik.errors.fullname}</ErrorMsg>}
+          {formik.rgs.touched.fullname && formik.rgs.errors.fullname && <ErrorMsg>{formik.rgs.errors.fullname}</ErrorMsg>}
         </Input>
         <div className="relative">
-          <Select name="gender" {...formik.getFieldProps('gender')}>
+          <Select name="gender" {...formik.rgs.getFieldProps('gender')}>
             <option value="DEFAULT" disabled className="bg-primary">
               Gender
             </option>
             <Option value="Male" field="Male" />
             <Option value="Female" field="Female" />
           </Select>
-          {formik.touched.gender && formik.errors.gender && <ErrorMsg>{formik.errors.gender}</ErrorMsg>}
+          {formik.rgs.touched.gender && formik.rgs.errors.gender && <ErrorMsg>{formik.rgs.errors.gender}</ErrorMsg>}
         </div>
 
         <Input
@@ -248,10 +225,10 @@ export default function Home() {
           type="number"
           placeholder="Phone"
           name="phone"
-          onInput={() => formik.setTouched({ ...formik.touched, phone: true })}
-          {...formik.getFieldProps('phone')}
+          onInput={() => formik.rgs.setTouched({ ...formik.rgs.touched, phone: true })}
+          {...formik.rgs.getFieldProps('phone')}
         >
-          {formik.touched.phone && formik.errors.phone && <ErrorMsg>{formik.errors.phone}</ErrorMsg>}
+          {formik.rgs.touched.phone && formik.rgs.errors.phone && <ErrorMsg>{formik.rgs.errors.phone}</ErrorMsg>}
         </Input>
 
         <Input
@@ -259,30 +236,34 @@ export default function Home() {
           type="text"
           placeholder="Address"
           name="address"
-          onInput={() => formik.setTouched({ ...formik.touched, address: true })}
-          {...formik.getFieldProps('address')}
+          onInput={() => formik.rgs.setTouched({ ...formik.rgs.touched, address: true })}
+          {...formik.rgs.getFieldProps('address')}
         >
-          {formik.touched.address && formik.errors.address && <ErrorMsg>{formik.errors.address}</ErrorMsg>}
+          {formik.rgs.touched.address && formik.rgs.errors.address && <ErrorMsg>{formik.rgs.errors.address}</ErrorMsg>}
         </Input>
       </Register>
 
-      <Login show={openLgn} onClose={() => setOpenLgn(false)} onSubmit={handleLogin} onDirect={openAnotherModal}>
+      <Login show={openLgn} onClose={() => setOpenLgn(false)} onSubmit={formik.lgn.handleSubmit} onDirect={openAnotherModal}>
         <Input
           //
           type="email"
           placeholder="Email"
           name="email"
-          value={email}
-          onChange={handleChange}
-        />
+          onInput={() => formik.lgn.setTouched({ ...formik.lgn.touched, email: true })}
+          {...formik.lgn.getFieldProps('email')}
+        >
+          {formik.lgn.touched.email && formik.lgn.errors.email && <ErrorMsg>{formik.lgn.errors.email}</ErrorMsg>}
+        </Input>
         <Input
           //
           type="password"
           placeholder="Password"
           name="password"
-          value={password}
-          onChange={handleChange}
-        />
+          onInput={() => formik.lgn.setTouched({ ...formik.lgn.touched, password: true })}
+          {...formik.lgn.getFieldProps('password')}
+        >
+          {formik.lgn.touched.password && formik.lgn.errors.password && <ErrorMsg>{formik.lgn.errors.password}</ErrorMsg>}
+        </Input>
       </Login>
     </div>
   );
